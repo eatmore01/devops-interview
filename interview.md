@@ -781,7 +781,7 @@
     
     Этапы следующие
     
-    ![boot-system-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled.png)
+    #!         [boot-system-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled.png)
     
     1. При включении компьютера цп переходит на адрес биоса и загружает биос.  
     2. Биос, или uefi проходит кучу проверок и согласно своим проверкам носитель информации.  
@@ -1958,7 +1958,7 @@ KiB Swap:        0 total,        0 free,        0 used. 10090148 avail Mem
     Именно в ней находятся выполняемые в данный момент программы. 
     А виртуальная память — это метод управления, расширяющий при помощи жесткого диска объем физической памяти, благодаря чему у пользователей появляется возможность запускать программы, требование к памяти которых превышает объем установленной в компьютере физической памяти. 
     
-    ![memory-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%201.png)
+    !    [memory-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%201.png)
     
 ---
 
@@ -2295,7 +2295,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Может быть каталог инодов и имен, которые с ним связаны. Но это также будет зависеть от файловой системы. В fat32 их нет
     
-    ![partition-images](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%202.png)
+    #! [partition-images](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%202.png)
     
 - Краткий ответ
     
@@ -2340,7 +2340,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Таким образом имя файла/директории хранится в информационной структуре каталогов.
     
-    ![https://github.com/rmntrvn/adm_linux_ops_questions/raw/master/questions/imgs/inf_struct_catalogs.gif](https://github.com/rmntrvn/adm_linux_ops_questions/raw/master/questions/imgs/inf_struct_catalogs.gif)
+    #[https://github.com/rmntrvn/adm_linux_ops_questions/raw/master/questions/imgs/inf_struct_catalogs.gif](https://github.com/rmntrvn/adm_linux_ops_questions/raw/master/questions/imgs/inf_struct_catalogs.gif)
     
 
 ---
@@ -2608,7 +2608,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     В системе **RAID 0** данные разделяются на блоки, которые записываются на все диски в массиве. При одновременном использовании нескольких дисков (как минимум 2) это обеспечивает превосходную производительность ввода-вывода. Достигается это за счёт того что данные передаются контроллерам дисков по быстрой шине одновременно, и диски записывают данные на свои блины или чипы одновременно. Таким образом, эффективная скорость записи может вырасти кратно до числа дисков. Эту производительность можно повысить, используя несколько контроллеров, в идеале один контроллер на диск.
     
-    ![raid-0-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%203.png)
+    #! [raid-0-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%203.png)
     
     **Преимущества**
     
@@ -2632,7 +2632,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Данные хранятся дважды, записывая их как на основной диск (или набор дисков), так и на зеркальный диск (или набор дисков). В случае сбоя диска контроллер использует основной диск или зеркальный диск для восстановления данных и продолжает работу. Вам нужно как минимум 2 диска для массива RAID 1.
     
-    ![raid-1-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%204.png)
+    #! [raid-1-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%204.png)
     
     **Преимущества**
     
@@ -2654,7 +2654,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     RAID 5 является наиболее распространенным безопасным уровнем RAID.  Требуется как минимум 3 диска, но может работать до 16. Блоки данных распределяются по дискам, и на одном диске записывается контрольная сумма четности всех данных блока.  Данные о четности не записываются на фиксированный диск, они распространяются на все диски, как показано на рисунке ниже.  Используя данные контроля четности, компьютер может пересчитать данные одного из других блоков данных, если эти данные больше не будут доступны.  Это означает, что массив RAID 5 может противостоять отказу одного диска без потери данных или доступа к ним.  Хотя RAID 5 может быть реализован программно, рекомендуется аппаратный контроллер.  Часто дополнительная кеш-память используется на этих контроллерах для улучшения производительности записи.
     
-    ![raid-5-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%205.png)
+    #! [raid-5-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%205.png)
     
     **Преимущества**
     
@@ -2675,7 +2675,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     RAID 6 похож на RAID 5, но данные о четности записываются на два диска. Это означает, что для него требуется как минимум 4 диска и он может выдержать 2 диска, умирающих одновременно. Вероятность поломки двух дисков в один и тот же момент, конечно, очень мала. Тем не менее, если диск в системах RAID 5 умирает и заменяется новым, для восстановления замененного диска требуются часы или даже больше дня. Если в это время умирает другой диск, вы все равно теряете все свои данные. При использовании RAID 6 массив RAID переживет даже этот второй сбой.
     
-    ![raid-6-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%206.png)
+    #! [raid-6-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%206.png)
     
     **Преимущества**
     
@@ -2696,7 +2696,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Можно объединить преимущества (и недостатки) RAID 0 и RAID 1 в одной системе. Это вложенная или гибридная конфигурация RAID. Он обеспечивает безопасность путем зеркального отображения всех данных на вторичных дисках, в то же время используя распределение по каждому набору дисков для ускорения передачи данных.
     
-    ![raid-10-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%207.png)
+    #! [raid-10-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%207.png)
     
     **Преимущества**
     
@@ -3068,7 +3068,7 @@ stickybit способ ограничить доступ к файлам в ли
 
 - Ответ
     
-    ![container-vs-vm-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%208.png)
+    #! [container-vs-vm-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%208.png)
     
     Если говорить о виртуальных машинах, там они работают через **Виртуализацию**
     
@@ -3116,7 +3116,7 @@ stickybit способ ограничить доступ к файлам в ли
     5. Container.
     6. Docker registry — хранилище образов.
     
-    ![docker-basic-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%209.png)
+    #! [docker-basic-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%209.png)
     
     На Docker_host работает Docker daemon, запускает контейнеры. Есть Client, который передаёт команды: собери образ, скачай образ, запусти контейнер. Docker daemon ходит в registry и выполняет их. Docker-клиент может обращаться и локально (к юникс-сокету), и по TCP с удалённого хоста.
     
@@ -3790,7 +3790,7 @@ stickybit способ ограничить доступ к файлам в ли
 
 - Ответ
     
-    ![tcp-con-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2010.png)
+    #! [tcp-con-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2010.png)
     
     1. Клиент, который намеревается установить соединение, посылает серверу сегмент с номером последовательности и флагом `SYN`. Он является пакетом синхронизации. Устанавливается только в первом пакете хоста и сервера. Позволяет установить сеанс, делая возможным обеим сторонам согласовать порядковый номер для начала связи.
        Дальнейший алгоритм: Сервер получает сегмент, запоминает номер последовательности и пытается создать сокет (буферы и управляющие структуры памяти) для обслуживания нового клиента;    
@@ -3798,6 +3798,8 @@ stickybit способ ограничить доступ к файлам в ли
        В случае неудачи сервер посылает клиенту сегмент с флагом RST.
     2. Если клиент получает сегмент с флагом SYN, то он запоминает номер последовательности и посылает сегмент с флагом ACK. Дальнейший алгоритм: Если он одновременно получает и флаг ACK (что обычно и происходит), то он переходит в состояние ESTABLISHED; Если клиент получает сегмент с флагом RST, то он прекращает попытки соединиться; Если клиент не получает ответа в течение 10 секунд, то он повторяет процесс соединения заново.  
     3. Если сервер в состоянии SYN-RECEIVED получает сегмент с флагом ACK, то он переходит в состояние ESTABLISHED. В противном случае после тайм-аута он закрывает сокет и переходит в состояние CLOSED. Процесс называется «трёхэтапным рукопожатием» (англ. three way handshake), так как несмотря на то что возможен процесс установления соединения с использованием четырёх сегментов (SYN в сторону сервера, ACK в сторону клиента, SYN в сторону клиента, ACK в сторону сервера), на практике для экономии времени используется три сегмента.
+ 
+   коротко - клиент SYN -> сервер SYN+ASK -> клиент  ASK -> сервер ( если сервер не получается ASK  после таймаут  закрывает сокет и переъходит в CLOSED состояние ) 
 
 ---
 
@@ -4249,7 +4251,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Этот процесс иногда называют подтверждением SSL-соединения. Хотя по описанию этот процесс выглядит длительным, в реальности он занимает миллисекунды.
     
-    ![ssl-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2013.png)
+    #! [ssl-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2013.png)
     
 
 ---
@@ -4358,7 +4360,7 @@ stickybit способ ограничить доступ к файлам в ли
   API - это способ взаимодействия между приложениями и серверами, и это есть Эндпоинты с своим урлом на которые клиент либо другой сервер может делать КРУД запросы
   для взаимодействия
 
-  ![RESTAPI-model](./imgs/RESTAPI.png)
+  #! [RESTAPI-model](./imgs/RESTAPI.png)
 
 
 ---
@@ -4409,7 +4411,7 @@ stickybit способ ограничить доступ к файлам в ли
    2. Межсетевой(маршрутизаторы, роутеры и тд)
    1. Канальный уровень(подготовка пакета)
 
-   ![TCP/IP-img](./imgs/TcpIp.png)
+   #! [TCP/IP-img](./imgs/TcpIp.png)
 
 
    Можно описать на примере работы протокола SSH
@@ -5373,7 +5375,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     **Container runtime** (docker) - компонент, взаимодействующий с контейнером.
     
-    ![kube-proxy-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2014.png)
+    #! [kube-proxy-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2014.png)
     
 ---
 
@@ -5387,7 +5389,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Эти контейнеры разделяют доступ к ресурсам типа томов хранилища, и сетевой стек. И каждый под имеет свой собственный внутренний апи
     
-    ![pod-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2015.png)
+    #! [pod-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2015.png)
     
 
 ---
@@ -5437,11 +5439,7 @@ stickybit способ ограничить доступ к файлам в ли
     kubectl -> kubeapi -> controle manager -> kubeapi -> etcd -> kubeapi -> kube scheduler -> kubelet
 
 
-
-    
-
-
-    ![pod-create](https://github.com/Swfuse/devops-interview/blob/main/imgs/pod-create.png)
+    #! [pod-create](https://github.com/Swfuse/devops-interview/blob/main/imgs/pod-create.png)
 
 ---
 
@@ -5461,7 +5459,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Она запускает определенное количество подов и гарантирует поддержание данного количества подов. И эти поды могут быть запущены на разных узлах кластера.
     
-    ![replica-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2016.png)
+    #! [replica-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2016.png)
     
     В спецификации указываем количество реплик.
     
@@ -5539,7 +5537,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     Он очень похож на репликасет. Но позволяет управляемо обновлять образами подов.
     
-    ![deployment-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2017.png)
+    #! [deployment-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2017.png)
     
 
 - Шаблон деплоймента
@@ -5669,7 +5667,7 @@ stickybit способ ограничить доступ к файлам в ли
     
     **restartPolicy** - регулируем перезапускать или нет. Но самому контейнеру за этим следить не надо. Поэтому Never
     
-    ![restart-policy-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2018.png)
+    #! [restart-policy-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2018.png)
     
 
 ---
@@ -5689,7 +5687,7 @@ stickybit способ ограничить доступ к файлам в ли
     
 - Пример кронджобы
     
-    ![cronjob-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2019.png)
+    #! [cronjob-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2019.png)
     
 ---
 
@@ -5784,7 +5782,7 @@ stickybit способ ограничить доступ к файлам в ли
     - Через Параметры запуска контейнеров
 - Пример использования
     
-    ![configMap-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2020.png)
+    #! [configMap-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2020.png)
     
     В volumes на уровня деплоймента в спецификации указывается конфиг мап, и имя конфиг мапа. 
     
@@ -5832,7 +5830,7 @@ stickybit способ ограничить доступ к файлам в ли
 
 - Схема статической и динамической
     
-    ![pvc-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2021.png)
+    #! [pvc-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2021.png)
     
     **Статическое**.
     
@@ -6052,7 +6050,7 @@ stickybit способ ограничить доступ к файлам в ли
     Kube-controller-manager каждому узлу присваивает podCIDR. Pod'ы каждого узла получают IP-адреса из пространства адресов в выделенном диапазоне podCIDR. Поскольку podCIDR'ы узлов не пересекаются, все pod'ы получают уникальные IP-адреса.
     Во время старта агент сетевого провайдера генерирует конфиг CNI. Когда pod планируется на узел, kubelet вызывает CRI-плагин для его создания. Далее, если используется containerd, плагин Containerd CRI вызывает CNI-плагин, указанный в конфиге CNI, для настройки сети pod'а. 
     В результате pod получает IP-адрес.
-    ![flannel-netowrk](./imgs/kubernetes-flannel-network.png)
+    #! [flannel-netowrk](./imgs/kubernetes-flannel-network.png)
 
     Плюсы использования *calico*
     * поддерживает network policies

@@ -1,6 +1,6 @@
-DevOps Engineer (Index Search)
+DevOps Engineer 
 
-#СберТех #Middle
+#сбр #Middle
 
 Стек: Linux, Ansible, Docker, Kubernetes, ELK, CI/CD (Jenkins)
 
