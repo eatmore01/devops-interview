@@ -220,7 +220,7 @@
             - [Kube scheduler**](#kube-scheduler)
             - [etcd](#etcd)
         - [Воркер-нода](#%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%D1%80-%D0%BD%D0%BE%D0%B4%D0%B0)
-            - [kublet](#kublet)
+            - [kubelet](#kubelet)
             - [kube proxy](#kube-proxy)
             - [Container runtime containerd, crio - компонент, взаимодействующий с контейнером.](#container-runtime-containerd-crio---%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82-%D0%B2%D0%B7%D0%B0%D0%B8%D0%BC%D0%BE%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D1%83%D1%8E%D1%89%D0%B8%D0%B9-%D1%81-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80%D0%BE%D0%BC)
             - [CNI-плагин](#cni-%D0%BF%D0%BB%D0%B0%D0%B3%D0%B8%D0%BD)
@@ -284,6 +284,9 @@
     - [про истио какие моды как работают как преенаправлять трафик  ?](#%D0%BF%D1%80%D0%BE-%D0%B8%D1%81%D1%82%D0%B8%D0%BE-%D0%BA%D0%B0%D0%BA%D0%B8%D0%B5-%D0%BC%D0%BE%D0%B4%D1%8B-%D0%BA%D0%B0%D0%BA-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%8E%D1%82-%D0%BA%D0%B0%D0%BA-%D0%BF%D1%80%D0%B5%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D1%8F%D1%82%D1%8C-%D1%82%D1%80%D0%B0%D1%84%D0%B8%D0%BA--)
     - [CRI, CSI, CNI, что это ?](#cri-csi-cni-%D1%87%D1%82%D0%BE-%D1%8D%D1%82%D0%BE-)
     - [Active-StandBy cluster что это ? еще есть Active Active](#active-standby-cluster-%D1%87%D1%82%D0%BE-%D1%8D%D1%82%D0%BE--%D0%B5%D1%89%D0%B5-%D0%B5%D1%81%D1%82%D1%8C-active-active)
+    - [](#)
+    - [](#)
+    - [](#)
 - [GITLAB CI/CD](#gitlab-cicd)
     - [Каковы ключевые компоненты GitLab CI/CD?](#%D0%BA%D0%B0%D0%BA%D0%BE%D0%B2%D1%8B-%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D1%8B-gitlab-cicd)
     - [Что такое before_script и after_script в GitLab CI/CD?/CD?](#%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-before_script-%D0%B8-after_script-%D0%B2-gitlab-cicdcd)
@@ -4389,11 +4392,35 @@ stickybit способ ограничить доступ к файлам в ли
     
     #### Воркер-нода
     
-    ##### kublet
+    ##### kubelet
     
-    Служба, которая опрашивает апи сервер на предмет того, какие поды предназначены узлу. (На котором служба находится). И запускает, удаляет их через **container runtime engine** (На картинке докер. Может быть что угодно.)
+    Агент на каждом узле. Единственный компонент, который реально запускает поды.
     
-    Также информирует api сервер о статусе работающих подов на узле.
+    Что делает:
+    - регистрирует узел в api server, шлёт heartbeat через Lease (kube-node-lease, раз в 10с)
+      и статус узла (условия Ready, MemoryPressure, DiskPressure) раз в 5м / при изменении
+    - watch'ит api server по фильтру spec.nodeName == своё имя — получает поды,
+      предназначенные этому узлу (назначил их scheduler, kubelet сам ничего не выбирает)
+    - static pods: манифесты из /etc/kubernetes/manifests запускает без api server,
+      в api создаёт их зеркальные копии (mirror pods). Так поднят control plane в kubeadm
+    - реконсиляция: сравнивает desired state (spec из api) с actual (от CRI) и приводит к нужному
+    - через CRI: RunPodSandbox > create infra-container/pause-контейнер + namespaces ( net, ipc, uts ) > PullImage > Create main Container → Start main Container
+    - тома: вызывает CSI Node-плагин (NodeStage/NodePublish) и монтирует их в pod dir
+    - probes: liveness (рестарт контейнера), readiness (исключение из endpoints сервиса),
+      startup (блокирует остальные пробы до старта)
+    - cgroups и QoS: выставляет limits/requests, классы Guaranteed/Burstable/BestEffort
+    - eviction: при nodefs/imagefs/memory pressure сам выселяет поды (BestEffort первыми)
+    - отдаёт метрики контейнеров через cAdvisor (встроен) на /metrics/cadvisor
+    - обслуживает kubectl exec/logs/port-forward (проксирует в рантайм)
+    
+    Чего НЕ делает:
+    - не вызывает CNI — это делает container runtime при создании сэндбокса
+    - не решает, где запустить под (scheduler)
+    - не пересоздаёт под на другом узле при падении узла (это controller manager)
+    - не управляет контейнерами, созданными не через k8s
+    
+    Конфиг: /var/lib/kubelet/config.yaml, kubeconfig + TLS bootstrap (CSR на api server).
+    Рабочая директория: /var/lib/kubelet/pods/<pod-uid>/
     
     ##### kube proxy
     
@@ -4449,7 +4476,8 @@ stickybit способ ограничить доступ к файлам в ли
 
     Конфиг на узле: `/etc/cni/net.d/*.conf`, бинари: `/opt/cni/bin/`.
     Плагины:  Cilium (eBPF, может заменить kube-proxy)
-    
+
+
     #! [kube-proxy-img](https://github.com/Swfuse/devops-interview/blob/main/imgs/Untitled%2014.png)
     
 ---
@@ -5695,13 +5723,23 @@ Waypoint Proxy (L7): Опциональные общие прокси (Envoy) н
 **Недостатки**:
 - если очень много данных то время переключения может быть значительным ( слышал случай что в какой то телеком инфре переключения занело 6 часов )
 
-     
 Репликацию данных можно либо через снэпшоты сделать какие то либо через бэкапы и крон джобы, либо через стриминг данных
 либо можон хранить все данные в 3 месте а не в каком либо кластере/ноде.
 
 Аккуратно нужно быть с какиим то действиями аля рассылка писем и тд.
 
+
+`Active/Active` - два кластера в разных зонах одинаковых под глобальным ЛБ, либо подд просто балансером без фич GlobalLB
+
 ---
+
+
+### 
+
+###
+
+
+###
 
 
 ## GITLAB CI/CD
